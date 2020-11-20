@@ -1,0 +1,34 @@
+{
+  "name": "seller-module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rakibul-Islam-GitHub"
+  },
+  "keywords": [
+    "foodblog"
+  ],
+  "author": "Rakibul Islam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rakibul-Islam-GitHub/learning-APWT-sec-A/issues"
+  },
+  "homepage": "https://github.com/Rakibul-Islam-GitHub/learning-APWT-sec-A#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "express-validator": "^6.6.1",
+    "multer": "^1.4.2",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.6"
+  }
+}
