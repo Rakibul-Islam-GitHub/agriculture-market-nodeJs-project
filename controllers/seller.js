@@ -3,9 +3,11 @@ const multer            = require('multer');
 const path              = require('path');
 const sellerModel		= require.main.require('./models/sellerModel');
 const { check, validationResult } = require('express-validator');
+const app=express();
 const router 	= express.Router();
 
 router.get('*',  (req, res, next)=>{
+	req.session.userid= 's001';
 	if(req.cookies['uname'] == null){
 		res.redirect('/');
 	}else{
@@ -27,7 +29,20 @@ var storage = multer.diskStorage({
 
 
 router.get('/dashboard', function(req, res){
-	res.render('seller/dashboard');
+	sellerModel.getAll(function(results){
+
+        if(results.length >0){
+          
+			let p = results.length;
+
+			res.render('seller/dashboard', {productcount : p });
+		
+
+        }
+		
+	});
+
+   
 
 });
 router.get('/additem', function(req, res){
@@ -108,34 +123,44 @@ router.get('/manageitem', function(req, res){
 
 });
 
-router.post('/manageitem/delete', function(req, res){
+router.get('/manageitem/delete/:id', function(req, res){
 	
 	//console.log(req.body.itemid);
-	let id= req.body.itemid;
+	let id= req.params.id;
+	sellerModel.getById(id, function(results){
+		
+		var title = results[0].title;
+		var price = results[0].price;
+		var description = results[0].description;
+		
+		res.render('seller/deleteitem', {title: title, price: price,  description: description});
+
+		
+	});
+
+	
+ });
+
+ router.post('/manageitem/delete/:id', function(req, res){
+
+	let id= req.params.id;
 	sellerModel.delete(id, function(status){
         if(status){
 			console.log('item deleted');
+			
 			res.redirect('/seller/manageitem');
-			res.send('done');
         }else{
-            // res.send('<h1>Something wrong! Try again </h1>');
+			// res.send('<h1>Something wrong! Try again </h1>');
+			console.log('error to delete itam');
         }
 
         
         
 	});
 
-	 
-	 res.send('work');
- 
  });
 
-router.post('/manageitem/delete/:id', function(req, res){
-   
-	
-	res.send('word');
 
-});
 
 router.get('/manageitem/edit/:id', function(req, res){
 	let id= req.params.id;
@@ -196,95 +221,58 @@ router.get('/message', function(req, res){
 
 });
 
-
-
-
-router.get('seller/edit/:id', (req, res)=>{
-	let id= req.params.id;
-
-	userModel.getById(id, function(results){
+router.get('/profile', function(req, res){
+	let id= 's001';
+	sellerModel.getprofile(id, function(results){
 		
-
-		res.render('seller/edititem', {});
+		var name = results[0].name;
+		var address = results[0].address;
+		var phone = results[0].phone;
+		var image = results[0].image;
+		var email = results[0].email;
+		
+		res.render('seller/profile', {name: name, address: address,  phone: phone, image: image, email: email});
 
 		
 	});
-  
 });
 
-router.post('/edit/:id', [
-    check('name').not().isEmpty().withMessage('Please fill all fields!'),
-	check('password', 'Please enter Your password ').not().isEmpty(),
-	check('company').not().isEmpty().withMessage(' can not be null'),
-	check('contact').not().isEmpty().withMessage('This field can not be null'),
-	check('username').not().isEmpty().withMessage('This field can not be null'),
+router.post('/profile', function(req, res){
+	let id= req.session.userid;
+	let details={
+		id: req.session.userid,
+        name : req.body.name,
+        address : req.body.address,
+		phone: req.body.phone,
+		email: req.body.email
+    };
     
-  ],  (req, res)=>{
 
-	const errors = validationResult(req);
-    console.log(errors);
+        sellerModel.profileUpdate(details, function(status){
+        if(status){
+            console.log('profile details updated');
+			res.redirect('/seller/profile');
+        }else{
 
-    if (!errors.isEmpty()) {
-		
-      return res.status(422).json(errors.array());
-    } else{
-		let user={
-			id : req.params.id,
-			name : req.body.name,
-			company : req.body.company,
-			contact : req.body.contact,
-			username: req.body.username,
-			password: req.body.password
-			
-	
-		};
-		console.log(user);
-	
-		userModel.update(user, function(status){
-	
-	
-			if(status){
-				console.log('user updated');
-				res.redirect('/home/employerlist');
-			}else{
-	
-			}
-	
-		});
+        }
 
-	}
-
-	
-	
-	// res.redirect('/home/userlist');
-});
-
-router.get('/delete/:id', (req, res)=>{
-	let id= req.params.id;
-
-	userModel.getById(id, function(results){
-		console.log(results[0].name);
-		var empname = results[0].name;
-		var empcompany = results[0].company;
-		var empcontact = results[0].contact;
-
-		res.render('admin/delete', {name: empname, company: empcompany, contact: empcontact});
-
-		
-	});
-
-
-	
+    });
 	
 });
 
-router.get('seller/itemlist', (req, res)=>{
+router.get('/profile/edit', function(req, res){
+	let id= req.session.userid;
+	sellerModel.getprofile(id, function(results){
+		
+		
+		var image = results[0].image;
+		
+		
+		res.render('seller/editprofile', { image: image});
 
-	userModel.getAll(function(results){
-		res.render('home/itemlist', {items: results});
+		
 	});
-
-})
+});
 
 module.exports = router;
 

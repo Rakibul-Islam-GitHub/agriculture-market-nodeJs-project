@@ -172,13 +172,20 @@
       </ol>
       <!-- Icon Cards-->
 
-      <h1> add manage item code here</h1>
+     
 
        <!-- Example DataTables Card-->
        <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-table"></i> Data Table Example</div>
+          <i class="fa fa-table"></i> Product management Data Table</div>
         <div class="card-body">
+         
+          <div class="input-group mb-0">
+            <div class="form-group">
+              <input type="text" id="myInput" class="form-control"  placeholder="Search product by ID..">
+            </div>
+            
+          </div>
           <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
@@ -217,7 +224,7 @@
                    
                     <td>
                       <a class="editdltbtn" href="/seller/manageitem/edit/<%= item.id %>">Edit</a> |
-                      <a class="editdltbtn2"  data-toggle="modal" data-target="#dltitembtnmodal" id="dltitembtn" value="<%= item.id %>" >Delete</a>
+                      <a class="editdltbtn2" href="/seller/manageitem/delete/<%= item.id %>" id="dltitembtn" value="<%= item.id %>" >Delete</a>
                       
                     </td>
                 </tr>
@@ -317,44 +324,68 @@
 
 $(document).ready(function() {
  // $('#dataTable').DataTable();
+ $('#myInput').keyup(function(){
+  myFunction();
+});
 
-  $('.editdltbtn2').click(function() {
-    var dltid = $(this).attr("value");
-    // alert(dltid);
-    deletebyId(dltid);
+ function myFunction() {
+   
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("dataTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+
+
+  // $('.editdltbtn2').click(function() {
+  //   var dltid = $(this).attr("value");
+  //   // alert(dltid);
+  //   deletebyId(dltid);
     
-  });
+  // });
   
 
- function deletebyId(id) {
+//  function deletebyId(id) {
 
-  $('#dltitembtnconfirm').click(function(e){      // delete item confirm btn
-        e.preventDefault();
-       // alert(id);
+//   $('#dltitembtnconfirm').click(function(e){      // delete item confirm btn
+//         e.preventDefault();
+//        // alert(id);
 
-        $.ajax({
+//         $.ajax({
 
-     url: "/seller/manageitem/delete",
-     type: "POST",
-     data: {
+//      url: "/seller/manageitem/delete",
+//      type: "POST",
+//      data: {
 
-       'itemid': id
+//        'itemid': id
 
-     },
-     success: function(response) {
-       window.location.href= '/seller/manageitem';
+//      },
+//      success: function(response) {
+//        window.location.href= '/seller/manageitem/delete/confirm';
 
         
 
-     },
-     error: function (request, status, error) {
-     alert('error');  //it will show error in webpage if any
-     }
+//      },
+//      error: function (request, status, error) {
+//      alert('error');  //it will show error in webpage if any
+//      }
 
-     });
-    });
+//      });
+//     });
    
- };
+//  };
  
 
   

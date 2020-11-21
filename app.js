@@ -32,13 +32,15 @@ app.use('/seller', seller);
 //router
 app.get('/', (req, res)=>{
 	res.cookie('uname', 'rakibul');
+	
 
-	res.render('seller/dashboard');
+	res.render('seller/dashboard', {productcount :'3'});
 	
 	
 });
 app.get('/logout2', (req, res)=>{
 	res.clearCookie('uname');
+	req.session.userid= '';
 	console.log('get ajax call from dashboard');
 	res.redirect('/');
 	

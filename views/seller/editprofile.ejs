@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        table{
+            margin-left: 0;
+        }
+        .adinput{
+            width: 70%;
+        }
+        input.btn.btn-primary.btn-block.mt-4 {
+    width: 87%;
+}
+input.btn.btn-primary.mt-4 {
+    margin-left: 35%;
+    width: 150px;
+}
+.btn-block {
+    
+    width: 82% !important;
+    margin-bottom: 100px;
+}
+label {
+    color: black;
+    display: inline-block;
+    margin-bottom: .4rem;
+    font-size: large;
+}
+    </style>
+  </head>
+  
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+<a class="navbar-brand" href="index.html">Agriculture Market</a>
+<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarResponsive">
+  <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+      <a class="nav-link" href="/seller/dashboard">
+        <i class="fa fa-fw fa-dashboard"></i>
+        <span class="nav-link-text">Dashboard</span>
+      </a>
+    </li>
+    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add Items">
+      <a class="nav-link" href="/seller/additem">
+        <i class="fa fa-fw fa-cart-plus"></i>
+        <span class="nav-link-text">Add Items</span>
+      </a>
+    </li>
+    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Manage Items">
+      <a class="nav-link" href="/seller/manageitem">
+        <i class="fa fa-fw fa-bars"></i>
+        <span class="nav-link-text">Manage Items</span>
+      </a>
+    </li>
+    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Comments">
+        <a class="nav-link" href="/seller/comments">
+          <i class="fa fa-fw fa-commenting-o"></i>
+          <span class="nav-link-text">Comments</span>
+        </a>
+      </li>
+      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Message">
+        <a class="nav-link" href="/seller/message">
+          <i class="fa fa-fw fa-envelope-open"></i>
+          <span class="nav-link-text">Message</span>
+        </a>
+      </li>
+    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+      <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+        <i class="fa fa-fw fa-wrench"></i>
+        <span class="nav-link-text">Components</span>
+      </a>
+      <ul class="sidenav-second-level collapse" id="collapseComponents">
+        <li>
+          <a href="seller/comments">Comments</a>
+        </li>
+        <li>
+          <a href="seller/message">Message</a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+      <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
+        <i class="fa fa-fw fa-file"></i>
+        <span class="nav-link-text">Example Pages</span>
+      </a>
+      <ul class="sidenav-second-level collapse" id="collapseExamplePages">
+        <li>
+          <a href="login.html">Login Page</a>
+        </li>
+        <li>
+          <a href="register.html">Registration Page</a>
+        </li>
+        <li>
+          <a href="forgot-password.html">Forgot Password Page</a>
+        </li>
+        <li>
+          <a href="blank.html">Blank Page</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+
+      <ul class="navbar-nav sidenav-toggler">
+        <li class="nav-item">
+          <a class="nav-link text-center" id="sidenavToggler">
+            <i class="fa fa-fw fa-angle-left"></i>
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+
+        <!-- message alert dropdown start -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-fw fa-envelope"></i>
+            <span class="d-lg-none">Messages
+              <span class="badge badge-pill badge-primary">12 New</span>
+            </span>
+            <span class="indicator text-primary d-none d-lg-block">
+              <i class="fa fa-fw fa-circle"></i>
+            </span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="messagesDropdown">
+            <h6 class="dropdown-header">New Messages:</h6>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">
+              <strong>David Miller</strong>
+              <span class="small float-right text-muted">11:21 AM</span>
+              <div class="dropdown-message small">Hey there! This new version of SB Admin is pretty awesome! These messages clip off when they reach the end of the box so they don't overflow over to the sides!</div>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">
+              <strong>Jane Smith</strong>
+              <span class="small float-right text-muted">11:21 AM</span>
+              <div class="dropdown-message small">I was wondering if you could meet for an appointment at 3:00 instead of 4:00. Thanks!</div>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">
+              <strong>John Doe</strong>
+              <span class="small float-right text-muted">11:21 AM</span>
+              <div class="dropdown-message small">I've sent the final files over to you for review. When you're able to sign off of them let me know and we can discuss distribution.</div>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item small" href="#">View all messages</a>
+          </div>
+        </li>
+        <!-- message alert dropdown end-->
+
+
+        
+        <li class="nav-item">
+          <form class="form-inline my-2 my-lg-0 mr-lg-2">
+            <div class="input-group">
+              <input class="form-control" type="text" placeholder="Search for...">
+              <span class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                  <i class="fa fa-search"></i>
+                </button>
+              </span>
+            </div>
+          </form>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+    <!-- nav end -->
+
+
+
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Edit Profile</li>
+      </ol>
+      <!-- add item  div-->
+
+      
+      <div class="row justify-content-center additemdiv">
+        <div class="col-12 col-md-8 col-lg-8 col-xl-6">
+           
+            <form method="POST" enctype="multipart/form-data" >
+                
+				  
+               
+                <div class="col-8 mb-5">
+                    <div>
+                        <img src="/image/<%=image%>" width="220px" height="180px" alt="profile_pic">
+                        
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Profile Picture</label>
+                        <div class="">
+                            <input type="file"  name="pic" id="pic-input"  />
+                        </div>
+                      </div>
+                    <div class="d-block ml-3 mt-4">
+                        <input class="text-center myButton mr-1" type="submit" name="submit" value="Confirm">
+                    <a class="myButton text-center" href="/seller/profile">Cancel</a>
+    
+                </div>
+    
+                </div>
+
+        
+                  
+                   
+                    <input type="hidden" name="action" id="action" value="event_dialog_add_newpartnerdata" />
+                  </form>
+              
+
+
+        </div>
+      </div>
+
+
+
+      
+    </div>
+    <!-- /.container-fluid-->
+    
+
+
+    <footer class="sticky-footer">
+      <div class="container">
+        <div class="text-center">
+          <small>Copyright © Rakibul</small>
+        </div>
+      </div>
+    </footer>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fa fa-angle-up"></i>
+    </a>
+
+    
+    <!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" id="logoutbtn" >Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+        
+
+    
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+
+    <script>
+        
+
+       
+
+
+
+$(document).ready(function() {
+ // $('#dataTable').DataTable();
+
+  
+
+  
+
+  $('#logoutbtn').click(function(){
+      
+
+      $.ajax({
+      method: "GET", // since you are waiting for GET request on server
+      url: "/logout", // you might have to provide full path to your endpoint starting with https://127.0.0.1/spotcrime
+     // data: { Greetings: "Hello" } // data object can be deleted since you don't expect any parameters on server side
+    })
+    .done(function( res ) {
+        window.location.href= '/seller/dashboard';
+    });
+
+
+  });
+
+
+});
+
+      
+    </script>
+      </body>
+</html>
