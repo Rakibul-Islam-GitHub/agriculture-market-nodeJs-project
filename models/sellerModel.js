@@ -15,7 +15,7 @@ module.exports= {
 	},
 	
 	getById: function(id, callback){
-		var sql = 'select * from items where id = "'+id+'" ';
+		var sql = 'select * from items where sellerid = "'+id+'" ';
 		db.getResults(sql, function(results){
 			callback(results);
 		});

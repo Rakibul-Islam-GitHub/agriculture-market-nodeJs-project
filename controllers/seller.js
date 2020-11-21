@@ -7,9 +7,9 @@ const app=express();
 const router 	= express.Router();
 
 router.get('*',  (req, res, next)=>{
-	req.session.userid= 's001';
+	
 	if(req.cookies['uname'] == null){
-		res.redirect('/');
+		res.redirect('/login');
 	}else{
 		next();
 	}
@@ -29,7 +29,11 @@ var storage = multer.diskStorage({
 
 
 router.get('/dashboard', function(req, res){
-	sellerModel.getAll(function(results){
+	let id= req.cookies['uname'];
+
+	console.log(req.session.userid);
+	
+	sellerModel.getById(id, function(results){
 
         if(results.length >0){
           

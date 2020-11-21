@@ -7,6 +7,7 @@ const cookieParser 		= require('cookie-parser');
 
 const logout			    = require('./controllers/logout');
 const seller				= require('./controllers/seller');
+const login				    = require('./controllers/login');
 
 
 
@@ -26,6 +27,7 @@ app.use(exSession({secret: 'secret value', saveUninitialized: true, resave: fals
 
 app.use('/logout', logout);
 app.use('/seller', seller);
+app.use('/login', login);
 
 
 
@@ -42,7 +44,8 @@ app.get('/logout2', (req, res)=>{
 	res.clearCookie('uname');
 	req.session.userid= '';
 	console.log('get ajax call from dashboard');
-	res.redirect('/');
+	//res.redirect('/login');
+	res.send('ok');
 	
 	
 });

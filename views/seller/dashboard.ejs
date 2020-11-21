@@ -241,7 +241,7 @@
           <!-- Example Notifications Card-->
          
       <!-- Example DataTables Card-->
-      <div class="card mb-3">
+      <!-- <div class="card mb-3">
         <div class="card-header">
           <i class="fa fa-table"></i> Data Table Example</div>
         <div class="card-body">
@@ -330,8 +330,11 @@
             </table>
           </div>
         </div>
-        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-      </div>
+        
+      </div> -->
+
+
+
     </div>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
@@ -389,13 +392,13 @@ $(document).ready(function() {
       
 
       $.ajax({
-      method: "GET", // since you are waiting for GET request on server
-      url: "/logout2", // you might have to provide full path to your endpoint starting with https://127.0.0.1/spotcrime
-     // data: { Greetings: "Hello" } // data object can be deleted since you don't expect any parameters on server side
+      method: "GET", 
+      url: "/logout2", 
+     
     })
     .done(function( res ) {
         
-        window.location.href= '/';
+        window.location.href= '/login';
     });
 
 
