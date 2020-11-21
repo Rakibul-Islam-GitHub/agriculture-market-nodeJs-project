@@ -118,7 +118,7 @@ label {
           </a>
         </li>
       </ul>
-      <ul class="navbar-nav ml-auto">
+      <ul class="topnav navbar-nav ml-auto">
 
         <!-- message alert dropdown start -->
         <li class="nav-item dropdown">
@@ -159,21 +159,16 @@ label {
 
 
         
+        
         <li class="nav-item">
-          <form class="form-inline my-2 my-lg-0 mr-lg-2">
-            <div class="input-group">
-              <input class="form-control" type="text" placeholder="Search for...">
-              <span class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fa fa-search"></i>
-                </button>
-              </span>
-            </div>
-          </form>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+            <a href="/seller/profile" class="nav-link">
+                <i class=" color-white fa fa-fw fa-user"></i>Profile</a>
+          </li>
+
+
+        <li class="nav-item color-red">
+          <a class="nav-link color-red" data-toggle="modal" data-target="#exampleModal">
+            <i  class="color-red fa fa-fw fa-sign-out"></i>Logout</a>
         </li>
       </ul>
     </div>
@@ -203,6 +198,24 @@ label {
                 </div>
 
             </div>
+
+            <% if(typeof profilealerts != 'undefined' ){   %>
+                <% profilealerts.forEach(function(error) {  %>
+    
+                  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                       <%=error.msg %>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+    
+    
+               <% }) %>
+    
+               <% }  %>
+
+
+
             <form method="POST" >
                 
 				  

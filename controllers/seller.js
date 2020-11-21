@@ -237,8 +237,35 @@ router.get('/profile', function(req, res){
 	});
 });
 
-router.post('/profile', function(req, res){
-	let id= req.session.userid;
+router.post('/profile', [
+    check('name').not().isEmpty().withMessage('Name can not be empty'),
+	check('address', 'Please fill the address').not().isEmpty(),
+	check('phone', 'Enter a product description').isNumeric().isLength({min:11, max:11}).withMessage('Phone number should have 11 digits'),
+	check('email', 'Invalid email address').isEmail(),
+    
+  ], function(req, res){
+	const errors = validationResult(req);
+	console.log(errors);
+	
+
+    if (!errors.isEmpty()) {
+		profilealerts = errors.array();
+		sellerModel.getprofile(req.session.userid, function(results){
+		
+			var name = results[0].name;
+			var address = results[0].address;
+			var phone = results[0].phone;
+			var image = results[0].image;
+			var email = results[0].email;
+			
+			res.render('seller/profile', {profilealerts, name: name, address: address,  phone: phone, image: image, email: email});
+			//res.render('seller/profile', {alerts});
+			
+		});
+		
+      
+    } else{
+		let id= req.session.userid;
 	let details={
 		id: req.session.userid,
         name : req.body.name,
@@ -258,6 +285,9 @@ router.post('/profile', function(req, res){
 
     });
 	
+
+	}
+	
 });
 
 router.get('/profile/edit', function(req, res){
@@ -273,6 +303,26 @@ router.get('/profile/edit', function(req, res){
 		
 	});
 });
+
+router.post('/profile/edit',  upload.single('pic'), function(req, res){
+	let id= req.session.userid;
+	let details={
+		id: id,
+		image: req.file.filename
+    };
+	sellerModel.profileUpdate(details, function(status){
+		if(status){
+			console.log('profile pic updated');
+			res.redirect('/seller/profile');
+		}else{
+
+		}
+
+	});
+	
+
+});
+
 
 module.exports = router;
 

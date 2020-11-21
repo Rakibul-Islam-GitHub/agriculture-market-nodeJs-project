@@ -63,7 +63,8 @@ module.exports= {
 	},
 	profileUpdate:function(item, callback){
 
-		let sql= 'update sellers set name= "'+item.name+'", address= "'+item.address+'", phone= "'+item.phone+'", email="'+item.email+'" where s_id= "'+item.id+'"';
+		if(item.image!=undefined){
+			let sql= 'update sellers set image= "'+item.image+'" where s_id= "'+item.id+'"';
 		db.execute(sql, function(status){
 			if(status){
 				callback(true);
@@ -71,6 +72,20 @@ module.exports= {
 				callback(false);
 			}
 		});
+
+		} else{
+			let sql= 'update sellers set name= "'+item.name+'", address= "'+item.address+'", phone= "'+item.phone+'", email="'+item.email+'" where s_id= "'+item.id+'"';
+		db.execute(sql, function(status){
+			if(status){
+				callback(true);
+			}else{
+				callback(false);
+			}
+		});
+
+		}
+
+		
 
 	},
 
