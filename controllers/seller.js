@@ -1,4 +1,6 @@
-const express 	= require('express');
+const express       	= require('express');
+const multer            = require('multer');
+const path              = require('path');
 const userModel		= require.main.require('./models/sellerModel');
 const { check, validationResult } = require('express-validator');
 const router 	= express.Router();
@@ -12,6 +14,18 @@ router.get('*',  (req, res, next)=>{
 });
 
 
+
+var storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+	  cb(null, 'assets/image/')
+	},
+	filename: function (req, file, cb) {
+	  cb(null, Date.now() + path.extname(file.originalname)) 
+	}
+  });
+  var upload = multer({ storage: storage });
+
+
 router.get('/dashboard', function(req, res){
 	res.render('seller/dashboard');
 
@@ -23,12 +37,10 @@ router.get('/additem', function(req, res){
 
 });
 
-router.post('/additem',[
-    check('title', 'Please enter a product title').not().isEmpty(),
-	check('price', 'Price should be numeric').isNumeric().isEmpty().withMessage('Enter product price'),
-	check('description', 'Enter a product description').not().isEmpty(),
-	check('pic', 'Product pic required').isEmpty()
-
+router.post('/additem', upload.single('pic'), [
+    check('title').not().isEmpty().withMessage('Please enter a product title'),
+	check('price', 'Price should be numeric').isNumeric(),
+	check('description', 'Enter a product description').not().isEmpty()
 	
     
   ], function(req, res){
@@ -41,6 +53,12 @@ router.post('/additem',[
 		res.render('seller/additems', {alerts});
       
     } else{
+
+		console.log('done');
+		
+
+		
+		
 
 	}
 
