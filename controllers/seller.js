@@ -23,6 +23,29 @@ router.get('/additem', function(req, res){
 
 });
 
+router.post('/additem',[
+    check('title', 'Please enter a product title').not().isEmpty(),
+	check('price', 'Price should be numeric').isNumeric().isEmpty().withMessage('Enter product price'),
+	check('description', 'Enter a product description').not().isEmpty(),
+	check('pic', 'Product pic required').isEmpty()
+
+	
+    
+  ], function(req, res){
+
+	const errors = validationResult(req);
+    console.log(errors);
+
+    if (!errors.isEmpty()) {
+		alerts = errors.array();
+		res.render('seller/additems', {alerts});
+      
+    } else{
+
+	}
+
+});
+
 router.get('/manageitem', function(req, res){
 
 	
@@ -58,19 +81,13 @@ router.get('/message', function(req, res){
 
 
 
-router.get('/edit/:id', (req, res)=>{
+router.get('seller/edit/:id', (req, res)=>{
 	let id= req.params.id;
 
 	userModel.getById(id, function(results){
-		console.log(results[0].name);
-		var empname = results[0].name;
-		var empcompany = results[0].company;
-		var empcontact = results[0].contact;
-		var empusername = results[0].username;
-		var emppassword = results[0].password;
+		
 
-
-		res.render('admin/edit', {name: empname, company: empcompany, contact: empcontact, username: empusername, password: emppassword});
+		res.render('seller/edititem', {});
 
 		
 	});
@@ -143,22 +160,10 @@ router.get('/delete/:id', (req, res)=>{
 	
 });
 
-router.post('/delete/:id', (req, res)=>{
-
-	let id= req.params.id;
-
-
-    userModel.delete(id, function(status){
-        
-        res.redirect('/home/employerlist');
-	});
-	// res.redirect('/home/employerlist');
-});
-
-router.get('/userlist', (req, res)=>{
+router.get('seller/itemlist', (req, res)=>{
 
 	userModel.getAll(function(results){
-		res.render('home/employerlist', {users: results});
+		res.render('home/itemlist', {items: results});
 	});
 
 })

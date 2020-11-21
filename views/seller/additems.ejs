@@ -188,13 +188,31 @@ label {
       </ol>
       <!-- add item  div-->
 
-      <h1> Add new item here</h1>
+      
       <div class="row justify-content-center additemdiv">
         <div class="col-12 col-md-8 col-lg-8 col-xl-6">
-            <form method="POST" enctype="multipart/form-data">
+
+          <% if(typeof alerts != 'undefined' ){   %>
+            <% alerts.forEach(function(error) {  %>
+
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                   <%=error.msg %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+
+           <% }) %>
+
+           <% }  %>
+
+
+          
+
+
+            <form method="POST"  enctype="multipart/form-data">
                 
-				  
-               
                 <div class=" col-10 ">
                   <div class="form-group">
                     <label class="control-label">Product Title</label>
@@ -220,7 +238,7 @@ label {
                   <div class="form-group">
                     <label class="control-label">Product Picture</label>
                     <div class="">
-                        <input type="file" name="pic" id="pic-input" required />
+                        <input type="file" name="pic" id="pic-input" />
                     </div>
                   </div>
                 </div>
