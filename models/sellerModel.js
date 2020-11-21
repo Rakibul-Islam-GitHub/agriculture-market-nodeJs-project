@@ -15,14 +15,14 @@ module.exports= {
 	},
 	
 	getById: function(id, callback){
-		var sql = 'select * from users where id = "'+id+'" ';
+		var sql = 'select * from items where id = "'+id+'" ';
 		db.getResults(sql, function(results){
 			callback(results);
 		});
 
 	},
 	getAll: function(callback){
-		var sql = "select * from users where role!='admin'";
+		var sql = "select * from items";
 		db.getResults(sql, function(results){
 			callback(results);
 		});
@@ -42,21 +42,28 @@ module.exports= {
 		});
 
 	},
-	update:function(user, callback){
+	update:function(item, callback){
 
-		
+		let sql= 'update items set title= "'+item.title+'", price= "'+item.price+'", description= "'+item.description+'", image="'+item.image+'" where id= "'+item.id+'"';
+		db.execute(sql, function(status){
+			if(status){
+				callback(true);
+			}else{
+				callback(false);
+			}
+		});
 
 	},
 
 	search: function(content, callback){
-		var sql = 'SELECT name from users where name like "%'+content+'%"';
+		var sql = 'SELECT name from items where title like "%'+content+'%"';
 		db.getResults(sql, function(results){
 			callback(results);
 		});
 
 	},
 	delete: function(id, callback){
-		let sql= 'delete from users where id= "'+id+'" ';
+		let sql= 'delete from items where id= "'+id+'" ';
 		db.execute(sql, function(status){
 			if(status){
 				callback(true);

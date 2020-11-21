@@ -62,6 +62,7 @@ th {
 }
 
 /* table style end */
-.editdltbtn {
+.editdltbtn,
+.editdltbtn2 {
   color: #bd2130;
 }

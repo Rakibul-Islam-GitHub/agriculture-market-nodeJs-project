@@ -7,7 +7,7 @@ const router 	= express.Router();
 
 router.get('*',  (req, res, next)=>{
 	if(req.cookies['uname'] == null){
-		res.redirect('/login');
+		res.redirect('/');
 	}else{
 		next();
 	}
@@ -92,24 +92,98 @@ router.post('/additem', upload.single('pic'), [
 
 router.get('/manageitem', function(req, res){
 
+	sellerModel.getAll(function(results){
+
+        if(results.length >0){
+          
+		res.render('seller/manageitem', {items: results});
+		
+
+        }
+		
+	});
+
 	
-	res.render('seller/manageitem');
+	
 
 });
 
 router.post('/manageitem/delete', function(req, res){
-   console.log('ajax worked on delete item');
+	
+	//console.log(req.body.itemid);
+	let id= req.body.itemid;
+	sellerModel.delete(id, function(status){
+        if(status){
+			console.log('item deleted');
+			res.redirect('/seller/manageitem');
+			res.send('done');
+        }else{
+            // res.send('<h1>Something wrong! Try again </h1>');
+        }
+
+        
+        
+	});
+
+	 
+	 res.send('work');
+ 
+ });
+
+router.post('/manageitem/delete/:id', function(req, res){
+   
 	
 	res.send('word');
 
 });
 
-router.get('/manageitem/edit', function(req, res){
-	console.log('ajax worked on delete item');
+router.get('/manageitem/edit/:id', function(req, res){
+	let id= req.params.id;
+
+	   sellerModel.getById(id, function(results){
+		
+		var title = results[0].title;
+		var price = results[0].price;
+		var description = results[0].description;
+		
+		
+
+
+		res.render('seller/edititem', {title: title, price: price,  description: description});
+
+		
+	});
 	 
-	 res.render('seller/edititem');
+	 
  
  });
+
+ router.post('/manageitem/edit/:id', upload.single('pic'), function(req, res){
+
+	//console.log(req.file.filename);
+
+    let item={
+		id : req.params.id,	
+        title : req.body.title,
+        price : req.body.price,
+        description: req.body.description,
+        image: req.file.filename
+        
+
+    };
+    console.log(item);
+
+        sellerModel.update(item, function(status){
+        if(status){
+            console.log('item updated');
+            res.redirect('/seller/manageitem');
+        }else{
+
+        }
+
+    });
+
+});
 
 router.get('/comments', function(req, res){
 	res.render('seller/comments');
