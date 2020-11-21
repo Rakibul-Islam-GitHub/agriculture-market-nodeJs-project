@@ -1,7 +1,7 @@
 const express       	= require('express');
 const multer            = require('multer');
 const path              = require('path');
-const userModel		= require.main.require('./models/sellerModel');
+const sellerModel		= require.main.require('./models/sellerModel');
 const { check, validationResult } = require('express-validator');
 const router 	= express.Router();
 
@@ -33,7 +33,7 @@ router.get('/dashboard', function(req, res){
 router.get('/additem', function(req, res){
 
 	
-	res.render('seller/additems');
+	res.render('seller/additems', {success: ''});
 
 });
 
@@ -46,15 +46,41 @@ router.post('/additem', upload.single('pic'), [
   ], function(req, res){
 
 	const errors = validationResult(req);
-    console.log(errors);
+	console.log(errors);
+	let success =0;
+	
+	
 
     if (!errors.isEmpty()) {
 		alerts = errors.array();
-		res.render('seller/additems', {alerts});
+		res.render('seller/additems', {alerts, success: ''});
       
     } else{
+		let item={
+			//sellerId : req.params.id,	
+			title : req.body.title,
+			price : req.body.price,
+			description: req.body.description,
+			image: req.file.filename
+			
+	
+		};
+		sellerModel.insert(item, function(status){
 
-		console.log('done');
+			if(status){
+				
+				
+				res.render('seller/additems', {success : 'Item addedd successfully'});
+			}else{
+				//res.redirect('/');
+	
+			}
+	
+		});
+
+
+
+		
 		
 
 		

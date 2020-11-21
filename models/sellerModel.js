@@ -27,9 +27,9 @@ module.exports= {
 			callback(results);
 		});
 	},
-	insert: function(user, callback){
+	insert: function(item, callback){
 
-		let sql= 'insert into users (name, username, password, email, phone, address, image,role) values ("'+user.name+'", "'+user.username+'", "'+user.password+'", "'+user.email+'", "'+user.phone+'", "'+user.address+'", "'+user.image+'", "'+user.role+'")';
+		let sql= 'insert into items (title, price, description, image) values ("'+item.title+'", "'+item.price+'", "'+item.description+'", "'+item.image+'")';
 		db.execute(sql, function(status){
 
 			if(status){
