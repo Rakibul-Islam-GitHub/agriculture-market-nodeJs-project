@@ -7,8 +7,9 @@ router.get('/', (req, res)=>{
 	//res.cookie('uname', '');
 	
 	res.clearCookie('uname');
-	res.redirect('/');
-	res.send('ok');
+	req.session.userid="";
+	//res.redirect('/');
+	res.send('logout');
 	
 });
 

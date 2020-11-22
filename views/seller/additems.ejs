@@ -334,24 +334,15 @@ $(document).ready(function() {
       
 
       $.ajax({
-      method: "GET", // since you are waiting for GET request on server
-      url: "/logout", // you might have to provide full path to your endpoint starting with https://127.0.0.1/spotcrime
-     // data: { Greetings: "Hello" } // data object can be deleted since you don't expect any parameters on server side
+      method: "GET", 
+      url: "/logout2", 
+     
     })
     .done(function( res ) {
         window.location.href= '/login';
     });
 
 
-
-
-    // $.get("/seller/dashboard", function(data){
-    //         // Display the returned data in browser
-    //         alert('logout');
-            
-    //     });
-
-    
 
   });
 

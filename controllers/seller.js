@@ -76,7 +76,7 @@ router.post('/additem', upload.single('pic'), [
       
     } else{
 		let item={
-			//sellerId : req.params.id,	
+			sellerid : req.cookies['uname'],	
 			title : req.body.title,
 			price : req.body.price,
 			description: req.body.description,
@@ -131,7 +131,7 @@ router.get('/manageitem/delete/:id', function(req, res){
 	
 	//console.log(req.body.itemid);
 	let id= req.params.id;
-	sellerModel.getById(id, function(results){
+	sellerModel.getByProductId(id, function(results){
 		
 		var title = results[0].title;
 		var price = results[0].price;
@@ -169,7 +169,7 @@ router.get('/manageitem/delete/:id', function(req, res){
 router.get('/manageitem/edit/:id', function(req, res){
 	let id= req.params.id;
 
-	   sellerModel.getById(id, function(results){
+	   sellerModel.getByProductId(id, function(results){
 		
 		var title = results[0].title;
 		var price = results[0].price;
@@ -295,7 +295,7 @@ router.post('/profile', [
 });
 
 router.get('/profile/edit', function(req, res){
-	let id= req.session.userid;
+	let id= req.cookies['uname'];
 	sellerModel.getprofile(id, function(results){
 		
 		

@@ -191,6 +191,7 @@
               <thead>
                 <tr>
                   <th>#ID</th>
+                  <th>Image</th>
                   <th>Product Name</th>
                   <th>Price</th>
                   <th>Description</th>
@@ -217,6 +218,7 @@
                 items.forEach( function(item){ %>
                 <tr>
                     <td><%= item.id %></td>
+                    <td><img src="/image/<%= item.image %>" width="60" height="50" alt="pic"></td>
                    
                     <td><%= item.title %></td>
                     <td><%= item.price %></td>
@@ -396,12 +398,12 @@ $(document).ready(function() {
       
 
       $.ajax({
-      method: "GET", // since you are waiting for GET request on server
-      url: "/logout2", // you might have to provide full path to your endpoint starting with https://127.0.0.1/spotcrime
-     // data: { Greetings: "Hello" } // data object can be deleted since you don't expect any parameters on server side
+      method: "GET",
+      url: "/logout2", 
+    
     })
     .done(function( res ) {
-        window.location.href= '/';
+        window.location.href= '/login';
     });
 
   });

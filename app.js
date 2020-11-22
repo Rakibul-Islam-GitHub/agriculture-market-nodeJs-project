@@ -3,6 +3,7 @@ const express 			= require('express');
 const bodyParser 		= require('body-parser');
 const exSession 		= require('express-session');
 const cookieParser 		= require('cookie-parser');
+const sellerModel		= require.main.require('./models/sellerModel');
 
 
 const logout			    = require('./controllers/logout');
@@ -33,10 +34,18 @@ app.use('/login', login);
 
 //router
 app.get('/', (req, res)=>{
-	res.cookie('uname', 'rakibul');
-	
 
-	res.render('seller/dashboard', {productcount :'3'});
+	sellerModel.getAll(function(results){
+
+        if(results.length >0){
+          
+		res.render('landingpage/index', {items: results});
+		
+
+        }
+		
+	});
+	
 	
 	
 });

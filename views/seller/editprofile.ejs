@@ -295,12 +295,12 @@ $(document).ready(function() {
       
 
       $.ajax({
-      method: "GET", // since you are waiting for GET request on server
-      url: "/logout", // you might have to provide full path to your endpoint starting with https://127.0.0.1/spotcrime
-     // data: { Greetings: "Hello" } // data object can be deleted since you don't expect any parameters on server side
+      method: "GET", 
+      url: "/logout", 
+     
     })
     .done(function( res ) {
-        window.location.href= '/seller/dashboard';
+        window.location.href= '/login';
     });
 
 
