@@ -9,6 +9,7 @@ const sellerModel		= require.main.require('./models/sellerModel');
 const logout			    = require('./controllers/logout');
 const seller				= require('./controllers/seller');
 const login				    = require('./controllers/login');
+const product			    = require('./controllers/product');
 
 
 
@@ -29,6 +30,7 @@ app.use(exSession({secret: 'secret value', saveUninitialized: true, resave: fals
 app.use('/logout', logout);
 app.use('/seller', seller);
 app.use('/login', login);
+app.use('/product', product);
 
 
 
