@@ -12,6 +12,13 @@
         table{
             margin-left: 0;
         }
+        .card.mb-3 {
+    width: 100%;
+}
+a{
+  cursor: pointer;
+  text-decoration: none !important;
+}
     </style>
   </head>
   
@@ -217,23 +224,13 @@
             </a>
           </div>
         </div>
-        <!-- <div class="col-xl-3 col-sm-6 mb-3">
-          <div class="card text-white bg-danger o-hidden h-100">
-            <div class="card-body">
-              <div class="card-body-icon">
-                <i class="fa fa-fw fa-support"></i>
-              </div>
-              <div class="mr-5">13 New Tickets!</div>
-            </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
-              <span class="float-left">View Details</span>
-              <span class="float-right">
-                <i class="fa fa-angle-right"></i>
-              </span>
-            </a>
-          </div>
-        </div> -->
-      </div>
+
+
+        
+
+
+
+
       
      
             <!-- Example Social Card-->
@@ -241,7 +238,7 @@
           <!-- Example Notifications Card-->
          
       <!-- Example DataTables Card-->
-      <!-- <div class="card mb-3">
+      <div class="card mb-3">
         <div class="card-header">
           <i class="fa fa-table"></i> Data Table Example</div>
         <div class="card-body">
@@ -249,89 +246,38 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Position</th>
-                  <th>Office</th>
-                  <th>Age</th>
-                  <th>Start date</th>
-                  <th>Salary</th>
+                  <th>Order ID</th>
+                  <th>Product Name</th>
+                  <th>date</th>
+                  <th>Action</th>
+                 
                 </tr>
               </thead>
-              <tfoot>
-                <tr>
-                  <th>Name</th>
-                  <th>Position</th>
-                  <th>Office</th>
-                  <th>Age</th>
-                  <th>Start date</th>
-                  <th>Salary</th>
-                </tr>
-              </tfoot>
-              <tbody>
+              <% 
+              items.forEach( function(item){ %>
+              <tr>
+                  <td><%= item.id %></td>
+                  <td><%= item.pname %></td>
+                  <td><%= item.date %></td>
+                  <td>
                
-                <tr>
-                  <td>Zorita Serrano</td>
-                  <td>Software Engineer</td>
-                  <td>San Francisco</td>
-                  <td>56</td>
-                  <td>2012/06/01</td>
-                  <td>$115,000</td>
-                </tr>
-                <tr>
-                  <td>Jennifer Acosta</td>
-                  <td>Junior Javascript Developer</td>
-                  <td>Edinburgh</td>
-                  <td>43</td>
-                  <td>2013/02/01</td>
-                  <td>$75,650</td>
-                </tr>
-                <tr>
-                  <td>Cara Stevens</td>
-                  <td>Sales Assistant</td>
-                  <td>New York</td>
-                  <td>46</td>
-                  <td>2011/12/06</td>
-                  <td>$145,600</td>
-                </tr>
-                <tr>
-                  <td>Hermione Butler</td>
-                  <td>Regional Director</td>
-                  <td>London</td>
-                  <td>47</td>
-                  <td>2011/03/21</td>
-                  <td>$356,250</td>
-                </tr>
-                <tr>
-                  <td>Lael Greer</td>
-                  <td>Systems Administrator</td>
-                  <td>London</td>
-                  <td>21</td>
-                  <td>2009/02/27</td>
-                  <td>$103,500</td>
-                </tr>
-                <tr>
-                  <td>Jonas Alexander</td>
-                  <td>Developer</td>
-                  <td>San Francisco</td>
-                  <td>30</td>
-                  <td>2010/07/14</td>
-                  <td>$86,500</td>
-                </tr>
-                <tr>
-                  <td>Shad Decker</td>
-                  <td>Regional Director</td>
-                  <td>Edinburgh</td>
-                  <td>51</td>
-                  <td>2008/11/13</td>
-                  <td>$183,000</td>
-                </tr>
+                    <a class="editdltbtn2"  id="dltitembtn" value="<%= item.id %>" >PDF</a>
+                    
+                  </td>
+              </tr>
+
+              
+      
+          <%
+              }); 
+          %>
                
               </tbody>
             </table>
           </div>
         </div>
         
-      </div> -->
+      </div> 
 
 
 
@@ -386,7 +332,55 @@
 
 
 $(document).ready(function() {
- // $('#dataTable').DataTable();
+
+
+       
+  $('.editdltbtn2').click(function() {
+    var dltid = $(this).attr("value");
+    // alert(dltid);
+    report(dltid);
+    
+  });
+  
+
+ function report(id) {
+
+  
+
+        $.ajax({
+
+     url: "/seller/report",
+     type: "POST",
+     data: {
+
+       'orderid': id
+
+     },
+     success: function(response) {
+       alert(response);
+      // window.location.href= '/seller/manageitem/delete/confirm';
+
+        
+
+     },
+     error: function (request, status, error) {
+     //alert('error');  //it will show error in webpage if any
+     }
+
+     });
+    
+   
+ };
+ 
+
+
+
+
+
+
+
+
+
 
   $('.logoutbtn').click(function(){
       
@@ -404,13 +398,7 @@ $(document).ready(function() {
 
 
 
-    // $.get("/seller/dashboard", function(data){
-    //         // Display the returned data in browser
-    //         alert('logout');
-            
-    //     });
 
-    
 
   });
 

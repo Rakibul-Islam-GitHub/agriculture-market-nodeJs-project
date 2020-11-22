@@ -3,8 +3,13 @@ const multer            = require('multer');
 const path              = require('path');
 const sellerModel		= require.main.require('./models/sellerModel');
 const { check, validationResult } = require('express-validator');
+const PDFDocument     = require('pdfkit');
+const fs = require('fs');
+
+const doc = new PDFDocument();
 const app=express();
 const router 	= express.Router();
+
 
 router.get('*',  (req, res, next)=>{
 	
@@ -15,6 +20,20 @@ router.get('*',  (req, res, next)=>{
 	}
 });
 
+router.post('/report', function(req,res){
+	console.log(req.body.orderid);
+	
+doc.pipe(fs.createWriteStream('reports1.pdf'));
+
+
+doc.text('test pdf')
+  
+  .fontSize(25);
+  
+  doc.end();
+  res.send('success');
+
+});
 
 
 var storage = multer.diskStorage({
@@ -36,10 +55,17 @@ router.get('/dashboard', function(req, res){
 	sellerModel.getById(id, function(results){
 
         if(results.length >0){
-          
 			let p = results.length;
 
-			res.render('seller/dashboard', {productcount : p });
+			sellerModel.getorderlist(function(result){
+
+				
+
+			res.render('seller/dashboard', {productcount : p, items: result });
+				
+			});
+          
+			
 		
 
         }

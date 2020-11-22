@@ -28,6 +28,12 @@ module.exports= {
 		});
 
 	}, 
+	getorderlist: function(callback){
+		var sql = "select * from orders";
+		db.getResults(sql, function(results){
+			callback(results);
+		});
+	},
 
 
 	getAll: function(callback){
