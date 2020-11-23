@@ -49,12 +49,19 @@ router.post('/',  [
 					res.redirect('/admin/dashboard');
 				}else if(results[0].role=='manager'){
 					res.cookie('uname', req.body.username);
-					res.redirect('/user');
+					res.redirect('/manager/dashboard');
 				}else if(results[0].role=='seller'){
                     req.session.userid = req.body.username;
                     console.log( req.session.userid);
-                    res.cookie('uname', req.body.username);
+					res.cookie('uname', req.body.username);
+					res.cookie('role', 'seller');
                     res.redirect('/seller/dashboard');
+
+                }else if(results[0].role=='customer'){
+                    req.session.userid = req.body.username;
+					res.cookie('uname', req.body.username);
+					res.cookie('role', 'customer');
+                    res.redirect('/');
 
                 }
 			});

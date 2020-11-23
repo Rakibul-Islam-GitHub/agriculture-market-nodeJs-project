@@ -8,7 +8,17 @@ const { check, validationResult } = require('express-validator');
 const app=express();
 const router 	= express.Router();
 
+var storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+	  cb(null, 'assets/image/')
+	},
+	filename: function (req, file, cb) {
+	  cb(null, Date.now() + path.extname(file.originalname)) 
+	}
+  });
+  var upload = multer({ storage: storage });
 
+  
 
 
 router.get('/:id', function(req,res){
@@ -34,13 +44,14 @@ router.get('/:id', function(req,res){
 		var date = comments[0].date;
         var time = comments[0].time;
 		var comment = comments[0].comment;
+		var userid = req.cookies['role'];
 
 		
-			res.render('landingpage/postdetails', {pid: id, title: title, sid: sellerid, price: price, description : description,image: image, userid:uid, user:'customer', 
+			res.render('landingpage/postdetails', {pid: id, title: title, sid: sellerid, price: price, description : description,image: image, userid:uid, user:userid, 
 		       comments });
 
 			}else{
-				res.render('landingpage/postdetails', {pid: id, title: title, sid: sellerid, price: price, description : description,image: image, userid:uid, user:'customer', 
+				res.render('landingpage/postdetails', {pid: id, title: title, sid: sellerid, price: price, description : description,image: image, userid:uid, user:userid, 
 		       comments });
 
 			}
@@ -101,15 +112,7 @@ const mysqlDate = date.toISOString().split("T")[0];
 
 
 
-var storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-	  cb(null, 'assets/image/')
-	},
-	filename: function (req, file, cb) {
-	  cb(null, Date.now() + path.extname(file.originalname)) 
-	}
-  });
-  var upload = multer({ storage: storage });
+
 
 
 router.get('/additem', function(req, res){
@@ -172,13 +175,13 @@ router.post('/additem', upload.single('pic'), [
 
 });
 
-router.get('/manageitem', function(req, res){
+router.post('/search', function(req, res){
 
-	sellerModel.getAll(function(results){
+	productModel.getAll(function(results){
 
         if(results.length >0){
-          
-		res.render('seller/manageitem', {items: results});
+          console.log(results);
+		res.send(results);
 		
 
         }

@@ -4,6 +4,7 @@ const bodyParser 		= require('body-parser');
 const exSession 		= require('express-session');
 const cookieParser 		= require('cookie-parser');
 const sellerModel		= require.main.require('./models/sellerModel');
+const productModel		= require.main.require('./models/productModel');
 
 
 const logout			    = require('./controllers/logout');
@@ -51,6 +52,23 @@ app.get('/', (req, res)=>{
 	
 	
 });
+
+app.post('/search', (req, res)=>{
+
+	let content = req.body.query;
+	console.log(content);
+	productModel.getSearch(content, function(results){
+
+        if(results.length >0){
+		  console.log(results);
+		  
+		res.json(results);
+		
+
+        }
+		
+	});
+})
 app.get('/logout2', (req, res)=>{
 	res.clearCookie('uname');
 	req.session.userid= '';

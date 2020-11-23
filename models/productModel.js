@@ -26,6 +26,12 @@ module.exports= {
 			callback(results);
 		});
 	},
+	getSearch : function(content, callback){
+		var sql = 'select * from items where title like "%'+content+'%" ';
+		db.getResults(sql, function(results){
+			callback(results);
+		});
+	},
 	
 	getcomment: function(id, callback){
 		var sql = 'select * from comments where productid = "'+id+'" ';

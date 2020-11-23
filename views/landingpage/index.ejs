@@ -111,6 +111,16 @@ a{
     height: 10px;
     right: -300px;
 }
+div#output {
+    margin-top: 28px;
+}
+ #output a {
+    color: #f8f8f8;
+    text-decoration: none;
+    background-color: transparent;
+    font-weight: 500;
+    font-size: larger;
+}
 
     </style>
   </head>
@@ -154,18 +164,27 @@ a{
 			<div class="products-header">
 				<h2>All products</h2>
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+
+
+               
                 
                 <div class="wrap">
                     <div class="search">
-                       <input type="text" class="searchTerm" placeholder="What are you looking for?">
-                       <button type="submit" class="searchButton">
+                       <input id="search1" type="text" class="searchTerm" placeholder="What are you looking for?">
+                       <button id="search" type="submit" class="searchButton">
                          <i class="fa fa-search"></i>
                       </button>
                     </div>
+
+                   
                  </div>
+
+                 <div id="output"> </div>
 
 
             </div>
+
+            
             
             
 
@@ -267,14 +286,57 @@ a{
 
 
 $(document).ready(function() {
+
+    $("#search1").keyup(function(){
+        var query = $(this).val();
+        //   alert(query);
+          if (query != "") {
+            $.ajax({
+              url: '/search',
+              method: 'POST',
+             
+              data: {query:query},
+              success: function(response){
+                $("#output").empty(); 
+                response.forEach(myFunction);
+
+function myFunction(item) {
+    
+                document.getElementById("output").innerHTML +=' <a href="/product/'+item.id+'   ">' +item.title +'</a>' +" <br>"; 
+                
+            }
+    
+// document.getElementById("output").innerHTML=' <a href="/product/'+item.id+'   ">' +item.title +'</a>' +" <br>"; 
+
+
+               
+
+               
+                $('#output').css('display', 'block');
+ 
+                $("#search").focusout(function(){
+                    $('#output').css('display', 'none');
+                    // $("#output").empty(); 
+                });
+                $("#search").focusin(function(){
+                    $('#output').css('display', 'block');
+                });
+              }
+            });
+          } else {
+          $('#output').css('display', 'none');
+        }
+      });
+
+
+
+
+
+
+
  // $('#dataTable').DataTable();
 
-  
-
-  
-
-  
-
+ 
 
 });
 
