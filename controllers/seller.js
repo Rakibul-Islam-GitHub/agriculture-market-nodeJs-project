@@ -22,17 +22,13 @@ router.get('*',  (req, res, next)=>{
 
 router.post('/report', function(req,res){
 	console.log(req.body.orderid);
-	
-doc.pipe(fs.createWriteStream('reports1.pdf'));
 
-
-doc.text('test pdf')
-  
-  .fontSize(25);
-  
-  doc.end();
-  res.send('success');
-
+	sellerModel.getorderlist(function(results){
+     console.log(JSON.stringify(results));
+		res.send(results);
+			
+		});
+	  
 });
 
 
@@ -241,7 +237,19 @@ router.get('/manageitem/edit/:id', function(req, res){
 });
 
 router.get('/comments', function(req, res){
-	res.render('seller/comments');
+	userid= req.cookies['uname'];
+	sellerModel.getcommentBysellerId(userid, function(comments){
+		console.log(comments);
+
+		if(comments.length>0){
+			res.render('seller/comments', {comments : comments} );
+		}
+			
+		})
+
+
+
+	
 
 });
 

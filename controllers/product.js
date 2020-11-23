@@ -12,16 +12,43 @@ const router 	= express.Router();
 
 
 router.get('/:id', function(req,res){
-    let id= req.params.id;
+	let id= req.params.id;
+	uid= req.cookies['uname'];
+	
     productModel.getByProductId(id, function(results){
 
         if(results.length >0){
+			var pid= id;
         var title = results[0].title;
 		var price = results[0].price;
+		var sellerid = results[0].sellerid;
         var description = results[0].description;
-        var image = results[0].image;
+		var image = results[0].image;
+		console.log(id);
+		
+		productModel.getcomment(id, function(comments){
+
+			if(comments.length>0){
+
+				var cid = comments[0].customerid;
+		var date = comments[0].date;
+        var time = comments[0].time;
+		var comment = comments[0].comment;
+
+		
+			res.render('landingpage/postdetails', {pid: id, title: title, sid: sellerid, price: price, description : description,image: image, userid:uid, user:'customer', 
+		       comments });
+
+			}else{
+				res.render('landingpage/postdetails', {pid: id, title: title, sid: sellerid, price: price, description : description,image: image, userid:uid, user:'customer', 
+		       comments });
+
+			}
+		
+		
+
+		})
           
-		res.render('landingpage/postdetails', {title: title, price: price, description : description,image: image});
 		
 
         }
@@ -30,6 +57,48 @@ router.get('/:id', function(req,res){
 
 
 });
+
+
+router.post('/:id', function(req,res){
+
+	let id = req.params.id;
+	const date = new Date();
+	var seconds = date.getSeconds();
+var minutes = date.getMinutes();
+var hour = date.getHours();
+
+var ampm = hour >= 12 ? 'PM' : 'AM';
+hour = hour % 12;
+hour = hour ? hour : 12; // the hour '0' should be '12'
+minutes = minutes < 10 ? '0'+minutes : minutes;
+let time= hour +':'+minutes+':'+seconds +' '+ampm;
+
+const mysqlDate = date.toISOString().split("T")[0];
+   
+    let comment = {
+		customerid : req.body.cid,
+		pid : req.params.id,
+		date: mysqlDate ,
+		comment: req.body.comment,
+		sellerid : req.body.sellerid,
+		time: time
+}
+  console.log(comment);
+    productModel.insert(comment, function(status){
+
+	if(status){
+		
+		res.send(req.params.id);
+	}else{
+		//res.redirect('/');
+
+	}
+
+});
+
+
+});
+
 
 
 var storage = multer.diskStorage({

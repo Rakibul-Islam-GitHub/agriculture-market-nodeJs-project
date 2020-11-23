@@ -66,6 +66,52 @@ section#products {
     background-color: #f2f2f2;
     padding: 3rem 0rem 6rem;
 }
+a{
+    text-decoration: none !important;
+}
+.header-content{
+    background-color: rgb(20 77 12 / 66%) !important;
+}
+
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+    width: 100%;
+    border: 3px solid #00B4CC;
+    border-right: none;
+    padding: 5px;
+    height: 36px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+  width: 40px;
+  height: 36px;
+  border: 1px solid #00B4CC;
+  background: #00B4CC;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+.wrap {
+    position: relative;
+    width: 45%;
+    height: 10px;
+    right: -300px;
+}
+
     </style>
   </head>
   
@@ -91,10 +137,10 @@ section#products {
 		<div id="header-hero">
 			<div class="header-bg"> <img  src="https://images.unsplash.com/photo-1437034962079-eb527ac36d3d" alt="header-image" /> </div>
 			<div class="header-content">
-				<p class="heading-1">Argiculture Market</p>
-				<h1>wellcome to Agriculture Market<span class="logo-style">
+				<p class="heading-1">Add more green to your life</p>
+				<h1>Wellcome to Agriculture Market<span class="logo-style">
                     <div>
-                    </span> All agriculture store here</h1>
+                    </span> You can get all products as you want!</h1>
 
                     </div>
                
@@ -107,14 +153,28 @@ section#products {
 		<div class="container">
 			<div class="products-header">
 				<h2>All products</h2>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                
+                <div class="wrap">
+                    <div class="search">
+                       <input type="text" class="searchTerm" placeholder="What are you looking for?">
+                       <button type="submit" class="searchButton">
+                         <i class="fa fa-search"></i>
+                      </button>
+                    </div>
+                 </div>
+
+
             </div>
+            
+            
 
 
             <% 
                 items.forEach( function(item){ %>
-                    <div class="product product-1">
-                        <figure> <img src="/image/<%= item.image %>" width="200" height="200" alt="product-image">
+                    <div class="product ">
+                        <a href="/product/<%= item.id %>"><figure> <img src="/image/<%= item.image %>" width="200" height="200" alt="product-image"></a>
+                        
                    
                    
                     <p><%= item.title %></p>

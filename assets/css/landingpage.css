@@ -138,12 +138,12 @@ header nav .nav-icon {
   font-family: "Lato", sans-serif;
   font-size: 3rem;
   font-style: italic;
-  text-transform: uppercase;
+
   margin-bottom: 2.4vw;
 }
 
 #header-hero .header-content h1 .logo-style {
-  color: #ce0095;
+  color: #0cef08;
 }
 
 #header-hero .header-content p.description {
@@ -409,7 +409,6 @@ header nav .nav-icon {
 
 #products .container .product figure img {
   width: 100%;
-  height: auto;
 }
 
 #products .container .product figure figcaption {
@@ -625,7 +624,7 @@ header nav .nav-icon {
 
 #blog .container .blog-header h2 {
   padding: 2rem 1rem;
-  text-transform: uppercase;
+
   font-family: "Franklin Gothic Medium";
   color: #000000;
   font-size: 1.875rem;

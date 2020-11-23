@@ -103,6 +103,13 @@ module.exports= {
 		
 
 	},
+	getcommentBysellerId : function(id, callback){
+		var sql = 'SELECT * from comments where sellerid = "'+id+'"';
+		db.getResults(sql, function(results){
+			callback(results);
+		});
+
+	},
 
 	search: function(content, callback){
 		var sql = 'SELECT name from items where title like "%'+content+'%"';

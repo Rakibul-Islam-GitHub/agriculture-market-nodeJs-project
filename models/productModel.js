@@ -26,11 +26,19 @@ module.exports= {
 			callback(results);
 		});
 	},
+	
+	getcomment: function(id, callback){
+		var sql = 'select * from comments where productid = "'+id+'" ';
+		db.getResults(sql, function(results){
+			callback(results);
+		});
+
+	}, 
 
 	
 	insert: function(item, callback){
 
-		let sql= 'insert into items (sellerid, title, price, description, image) values ("'+item.sellerid+'","'+item.title+'", "'+item.price+'", "'+item.description+'", "'+item.image+'")';
+		let sql= 'insert into comments (customerid, productid, sellerid, date, time, comment) values ("'+item.customerid+'","'+item.pid+'", "'+item.sellerid+'","'+item.date+'", "'+item.time+'", "'+item.comment+'")';
 		db.execute(sql, function(status){
 
 			if(status){
