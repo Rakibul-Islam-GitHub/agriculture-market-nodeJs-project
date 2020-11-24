@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="/js/filesaver.js"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <style>
         table{
             margin-left: 0;
@@ -46,6 +48,50 @@ a{
 	position:relative;
 	top:1px;
 }
+a#pdf-report {
+    color: #f1f1f1;
+    margin-left: 613px;
+}
+
+.pdf-report {
+	background:linear-gradient(to bottom, #d0451b 5%, #f53913 100%);
+	background-color:#d0451b;
+	border-radius:5px;
+	border:2px solid #942911;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	padding:6px 24px;
+	text-decoration:none;
+}
+.pdf-report:hover {
+	background:linear-gradient(to bottom, #f53913 5%, #d0451b 100%);
+	background-color:#f53913;
+}
+.pdf-report:active {
+	position:relative;
+	top:1px;
+}
+
+canvas {
+  border: 1px dotted red;
+}
+
+.chart-container {
+  position: relative;
+  margin: auto;
+  height: 80vh;
+  width: 80vw;
+}
+#chart{
+      display: block;
+    height: 288px;
+    width: 1205px;
+}
+
+
     </style>
   </head>
   
@@ -189,7 +235,7 @@ a{
               <div class="card-body-icon">
                 <i class="fa fa-fw fa-shopping-cart"></i>
               </div>
-              <div class="mr-5"> [] Orders!</div>
+              <div class="mr-5"> <%=ordercount %> Orders!</div>
             </div>
             <a class="card-footer text-white clearfix small z-1" href="/seller/order">
               <span class="float-left">View Details</span>
@@ -200,23 +246,24 @@ a{
           </div>
         </div>
 
+        <div class="chart-container">
+          <canvas id="chart"></canvas>
+        </div>
+
 
         
 
-
-
-
-      
      
             <!-- Example Social Card-->
             
           <!-- Example Notifications Card-->
          
       <!-- Example DataTables Card-->
-      <div class="card mb-3">
+      <div class="card mb-3" id="pdfprint">
         <div class="card-header">
           <i class="fa fa-table"></i> Data Table Example
           <a id="order-report"  class="order-report">Excel Report</a>
+          <a id="pdf-report"  class="pdf-report"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF Report</a>
         
         </div>
           
@@ -312,6 +359,79 @@ a{
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
 $(document).ready(function() {
+
+  // chart start
+
+  $.ajax({
+
+url: "/seller/report",
+type: "POST",
+data: {
+
+'sellerid': 'seller id'
+
+},
+success: function(response) {
+  showchart(response.length);
+
+
+},
+error: function (request, status, error) {
+//alert('error');  //it will show error in webpage if any
+}
+
+});
+
+
+  
+  //alert(monthdata);
+
+  function showchart(lastdata){
+    let monthdata =  [.4, .2, 0, .6, 0, 0, 1];
+  monthdata[6]= lastdata;
+    
+  var data = {
+  labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
+  datasets: [{
+    label: "Total order per month",
+    backgroundColor: "rgba(255,99,132,0.2)",
+    borderColor: "rgba(255,99,132,1)",
+    borderWidth: 2,
+    hoverBackgroundColor: "rgba(255,99,132,0.4)",
+    hoverBorderColor: "rgba(255,99,132,1)",
+    data: monthdata,
+  }]
+};
+
+var options = {
+  maintainAspectRatio: false,
+  scales: {
+    yAxes: [{
+      stacked: true,
+      gridLines: {
+        display: true,
+        color: "rgba(255,99,132,0.2)"
+      }
+    }],
+    xAxes: [{
+      gridLines: {
+        display: false
+      }
+    }]
+  }
+};
+
+Chart.Bar('chart', {
+  options: options,
+  data: data
+});
+
+  }
+
+
+
+
+  // chart end
   
 
   function downloadexcel(data) {
@@ -361,8 +481,22 @@ error: function (request, status, error) {
 });
     
   });
-  
 
+
+  
+// pdf generator
+
+document.getElementById("pdf-report")
+        .addEventListener("click", () => {
+            const pdfprint = document.getElementById("pdfprint");
+            
+            
+            html2pdf().from(pdfprint).save();
+        })
+
+
+
+// pdf generator end
  
 
 

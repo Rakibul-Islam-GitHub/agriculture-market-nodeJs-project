@@ -60,8 +60,17 @@ router.get('/dashboard', function(req, res){
 					console.log(comments);
 			
 					let c = comments.length;
+
 					
-					res.render('seller/dashboard', {productcount : p, commentcount: c, items: result });
+
+	sellerModel.getorderlist(id, function(results){
+     
+		
+		res.render('seller/dashboard', {productcount : p, commentcount: c, ordercount: results.length, items: result });
+			
+		});
+					
+					
 						
 					});
 
@@ -78,7 +87,7 @@ router.get('/dashboard', function(req, res){
 router.get('/additem', function(req, res){
 
 	
-	res.render('seller/additems', {success: ''});
+	res.render('seller/additems', {alerts: undefined, success:''});
 
 });
 
@@ -271,7 +280,7 @@ router.get('/order', function(req, res){
 });
 
 router.get('/profile', function(req, res){
-	let id= 's001';
+	let id= req.cookies['uname'];
 	sellerModel.getprofile(id, function(results){
 		
 		var name = results[0].name;
