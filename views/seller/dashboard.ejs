@@ -261,7 +261,7 @@ canvas {
       <!-- Example DataTables Card-->
       <div class="card mb-3" id="pdfprint">
         <div class="card-header">
-          <i class="fa fa-table"></i> Data Table Example
+          <i class="fa fa-table"></i> Completed oeders
           <a id="order-report"  class="order-report">Excel Report</a>
           <a id="pdf-report"  class="pdf-report"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF Report</a>
         
@@ -287,7 +287,7 @@ canvas {
                   <td><%= item.date %></td>
                   <td>
                
-                    <a class="editdltbtn2"  id="dltitembtn" value="<%= item.orderid %>" >View</a>
+                    <a class="editdltbtn2"  id="dltitembtn" href="/seller/order" value="<%= item.orderid %>" >View</a>
                     
                   </td>
               </tr>
@@ -387,7 +387,7 @@ error: function (request, status, error) {
   //alert(monthdata);
 
   function showchart(lastdata){
-    let monthdata =  [.4, .2, 0, .6, 0, 0, 1];
+    let monthdata =  [.4, .2, .2, .6, .1, .3, 1];
   monthdata[6]= lastdata;
     
   var data = {

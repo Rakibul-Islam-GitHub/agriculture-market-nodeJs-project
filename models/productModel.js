@@ -60,7 +60,7 @@ module.exports= {
 
 	insertOrder : function(item, callback){
 
-		let sql= 'insert into orders (pname,customerid, productid, price, sellerid, date, time) values ("'+item.pname+'", "'+item.customerid+'","'+item.productid+'", "'+item.price+'", "'+item.sellerid+'","'+item.date+'", "'+item.time+'")';
+		let sql= 'insert into orders (pname,customerid, productid, price, sellerid, date, time, status) values ("'+item.pname+'", "'+item.customerid+'","'+item.productid+'", "'+item.price+'", "'+item.sellerid+'","'+item.date+'", "'+item.time+'", "incomplete")';
 		db.execute(sql, function(status){
 
 			if(status){

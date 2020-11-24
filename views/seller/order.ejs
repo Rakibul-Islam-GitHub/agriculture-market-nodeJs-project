@@ -15,6 +15,9 @@
             cursor: pointer;
             text-decoration: none !important;
         }
+        .color-green{
+          color: green;
+        }
     </style>
   </head>
   
@@ -125,7 +128,7 @@
        <!-- Example DataTables Card-->
        <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-table"></i> Product management Data Table</div>
+          <i class="fa fa-table"></i> Order Management Table</div>
         <div class="card-body">
          
           <div class="input-group mb-0">
@@ -142,6 +145,8 @@
                     <th>Product Name</th>
                     <th>CustomerID</th>
                     <th>Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
                    
                   </tr>
                 </thead>
@@ -152,6 +157,21 @@
                     <td><%= item.pname %></td>
                     <td><%= item.customerid %></td>
                     <td><%= item.date %></td>
+                    <td><%= item.status %></td>
+
+                    <% if(item.status=='incomplete') {  %>
+                      <td>
+                 
+                        <a class="editdltbtn2"  id="dltitembtn" href="/seller/order/<%= item.orderid %>" value="<%= item.orderid %>" >Approve Now</a>
+                        
+                      </td>
+
+                 <%   }else{  %>
+                  <td> <p class="color-green">Approved</p> </td>
+                  
+
+                <%    }  %>
+
 
                     <!-- <td>
                  

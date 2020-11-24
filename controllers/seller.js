@@ -55,7 +55,7 @@ router.get('/dashboard', function(req, res){
         if(results.length >0){
 			let p = results.length;
 
-			sellerModel.getorderlist(id, function(result){
+			sellerModel.getcompleteorder(id, function(result){
 				sellerModel.getcommentBysellerId(req.cookies['uname'], function(comments){
 					console.log(comments);
 			
@@ -274,6 +274,38 @@ router.get('/order', function(req, res){
 		res.render('seller/order', {items: results} );
 		
 	});
+	
+	
+
+});
+
+router.get('/order/:id', function(req, res){
+	let id= req.params.id;
+
+	res.render('seller/confirmorder' );
+
+	// sellerModel.getorderbyid(id, function(results){
+		
+		
+	// });
+	
+	
+
+});
+
+router.post('/order/:id', function(req, res){
+	let id= req.params.id;
+
+	sellerModel.orderConfirm(id, function(status){
+		if(status){
+			console.log(status);
+			res.redirect('/seller/order');
+		}else{
+			res.send('something wrong!');
+		}
+		
+		
+		 });
 	
 	
 

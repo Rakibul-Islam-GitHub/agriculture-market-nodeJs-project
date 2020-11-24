@@ -35,6 +35,13 @@ module.exports= {
 		});
 	},
 
+	getcompleteorder: function(id, callback){
+		var sql = 'select * from orders where sellerid= "'+id+'" and status="complete" ';
+		db.getResults(sql, function(results){
+			callback(results);
+		});
+	},
+
 	getAll: function(callback){
 		var sql = "select * from items";
 		db.getResults(sql, function(results){
@@ -75,6 +82,20 @@ module.exports= {
 		});
 
 	},
+
+	orderConfirm: function(id, callback){
+
+		let sql= 'update orders set status="complete" where orderid= "'+id+'"';
+		db.execute(sql, function(status){
+			if(status){
+				callback(true);
+			}else{
+				callback(false);
+			}
+		});
+
+	},
+
 	profileUpdate:function(item, callback){
 
 		if(item.image!=undefined){
