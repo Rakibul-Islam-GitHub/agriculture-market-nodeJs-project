@@ -6,7 +6,13 @@ const router 		= express.Router();
 
 
 router.get('/', (req, res)=>{
-	res.render('login/index', {loginalerts: undefined});
+	if(req.cookies['uname']==''){
+		res.render('login/index', {loginalerts: undefined});
+
+	}else if(req.cookies['role']=='seller'){
+		res.redirect('seller/dashboard');
+	}
+	
 });
 
 router.post('/',  [

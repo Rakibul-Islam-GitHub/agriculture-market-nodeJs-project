@@ -327,7 +327,22 @@ img {
  .comment_block .new_comment .love:hover {
 	 color: #ff6347;
 }
-
+.detailseditdltdiv.mt-5 {
+    color: white;
+    margin-left: 297px;
+}
+p.detailseditdlt {
+    display: initial;
+}
+.buyfooter{
+    margin-top: 350px;
+}
+.confirmbuy{
+    margin-top: 50px;
+}
+.color-red{
+    color: red;
+}
   
     </style>
   </head>
@@ -346,143 +361,73 @@ img {
 				<li><a href="#collections">Shops</a></li>
 				
                 <li><a href="#contact">contact</a></li>
-
-                <% if(role=='seller'){  %>
-                  <li><a href="/seller/dashboard">My Account</a></li>
-  
-               <%  } else if(role=='customer'){  %>
-                  <li><a href="/customer/dashboard">My Account</a></li>
-  
-              <% }else{  %>
-                  <li><a href="/login">Login</a></li>
-             <% }  %>
-
-
-
-
-      
+                <li><a href="/login">login</a></li>
 			</ul>
 			<div class="cart nav-icon nav-common"><img src="https://res.cloudinary.com/de8cuyd0n/image/upload/v1520412544/E-commerce%20landing%20page/icons/shopping_cart_1x.png" alt="shopping-cart"></div>
 			<div class="menu nav-icon nav-common"><img src="https://res.cloudinary.com/de8cuyd0n/image/upload/v1520412543/E-commerce%20landing%20page/icons/menu_1x.png" alt="hamburger-menu"></div>
 		</nav>
 		
-	</header>
-	
-	<div class=" mb-5 container">
-		<div class="card">
-			<div class="container-fliud">
-				<div class="wrapper row">
-					<div class="preview col-md-6">
-						
-						<div class="preview-pic tab-content">
-						  <div class="tab-pane active" ><img src="/image/<%=image%>" alt="product_pic" /></div>
-						  
-						</div>
-						
-                        
-                        
-
-					</div>
-					<div class="details col-md-6">
-						<h3 class="product-title"> <%=title%>  </h3>
-						<div class="rating">
-							<div class="stars">
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star"></span>
-								<span class="fa fa-star"></span>
-							</div>
-							<span class="review-no">41 reviews</span>
-						</div>
-						<p class="product-description"><%=description%> </p>
-						<h4 class="price">current price: <span><%=price%> TK</span></h4>
-						
-						
-						<div class="action">
-              <a href="/product/buy/<%=pid%>"><button class="add-to-cart btn btn-default" type="button">Buy Now</button></a>
-              
-              <a href="#review"><button class="like btn btn-default"  type="button"><span class="fa fa-heart"> Review</span></button></a>
-							
-						</div>
-					</div>
-				</div>
-			</div>
-    </div>
+    </header>
     
-    <div id="review" class="card">
 
-
-      <% 
-      comments.forEach( function(cmt){ %>
-        <div class="new_comment">
-
-          <!-- build comment -->
-           <ul class="user_comment">
-    
-             <!-- current #{user} avatar -->
-             <div class="user_avatar">
-               <img src="https://images.unsplash.com/photo-1530533718754-001d2668365a">
-             </div><!-- the comment body -->
-             <div class="comment_body">
-               <p><%=cmt.comment%></p>
-             </div>
-    
-             <!-- comments toolbar -->
-             <div class="comment_toolbar">
-    
-               <!--  date and time -->
-               <div class="comment_details">
-                 
-                   <li><i class="fa fa-clock-o"></i> <%=cmt.time%></li>
-                   <li><i class="fa fa-calendar"></i> <%=cmt.date%></li>
-                   <li><i class="fa fa-pencil"></i> <span class="user"><%=cmt.customerid%></span></li>
-                 
-               </div>
-             </div>
-           </ul>
-         </div>
-      
-
-  <%
-      }); 
-  %>
-
-
-
-
-
-      
-
-     
-  
-       </div>
-
-
-
-           <!-- comment section for user -->
-
-           <% if(user== 'customer'){  %>
-
-            <div class="card">
-              <h3>Give us review or comment</h3>
-              <form action="" method="">
-               <textarea class="form-control" name="comment" id="cmt" cols="30" rows="10"></textarea>
-               <input class="btn btn-primary mt-3" id="comment"  title="<%=userid%>" sid="<%=sid%>"  name="<%=pid%>" type="submit" value="Submit">
-              </form>
-            </div>
+	<div class=" confirmbuy mb-5 container">
+        <div class="row">
+            <div class="col col-8 text-center">
                
-         <%  }  %>
-      
-  
+                <div class="row justify-content-center additemdiv">
+                    <form action="" method="post">
+                      <div class="detailseditdltdiv mt-5">
+                          <h3 class="">Do you want to buy this item?</h3>
+                          <div class="">
+              
+                              <p class="detailseditdlt">Title  :</p>
+                              <p class="detailseditdlt"><%=title%></p>
+                          </div>
+              
+              
+                              <div class="">
+                                  <p class="detailseditdlt">Price :</p>
+                                  <p class="detailseditdlt"><%=price%></p>
+                              </div>
+              
+                              <div class="">
+                                  <p class="detailseditdlt">Description  :</p>
+                                  <p class="detailseditdlt"><%=description%></p>
+                              </div>
+                              
+              
+                              
+                   <% if(role=='customer') {  %>
+                    <div class="d-block mt-3 mb-5">
+                        <input class="text-center myButton mr-1" type="submit" title="<%=sellerid%>" name="submit" value="Confirm">
+                    <a class="myButton text-center" href="/">Cancel</a>
+    
+                     </div>
 
+                 <%  } else{     %>
+                    <div class="d-block mt-3 mb-5">
+                       <h3 class="color-red">Only registered customer can buy this product! </h3>
+    
+                     </div>
 
-      </div>
+               <%  }  %>
+              
+                         
+              
+                      </div>
+
+            </div>
+
+        </div>
+        
+
 
     </div>
-	</div>
 	
-	<footer>
+
+    
+	
+	<footer class="buyfooter">
 		<p class="copy-right"><img src="https://res.cloudinary.com/de8cuyd0n/image/upload/v1520412543/E-commerce%20landing%20page/icons/copy-right-img_1x.png" alt="copy right image" /> 2020 all right reserved </p>
 		<p>privacy policy</p>
 		<p>license</p>

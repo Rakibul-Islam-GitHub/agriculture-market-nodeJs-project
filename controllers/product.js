@@ -2,6 +2,7 @@ const express       	= require('express');
 const multer            = require('multer');
 const path              = require('path');
 const productModel		= require.main.require('./models/productModel');
+const sellerModel		= require.main.require('./models/sellerModel');
 const { check, validationResult } = require('express-validator');
 
 
@@ -18,7 +19,7 @@ var storage = multer.diskStorage({
   });
   var upload = multer({ storage: storage });
 
-  
+
 
 
 router.get('/:id', function(req,res){
@@ -48,11 +49,11 @@ router.get('/:id', function(req,res){
 
 		
 			res.render('landingpage/postdetails', {pid: id, title: title, sid: sellerid, price: price, description : description,image: image, userid:uid, user:userid, 
-		       comments });
+		       comments, role: req.cookies['role'] });
 
 			}else{
 				res.render('landingpage/postdetails', {pid: id, title: title, sid: sellerid, price: price, description : description,image: image, userid:uid, user:userid, 
-		       comments });
+		       comments ,role: req.cookies['role']});
 
 			}
 		
@@ -111,8 +112,33 @@ const mysqlDate = date.toISOString().split("T")[0];
 });
 
 
+router.get('/buy/:id', function(req, res){
+
+	let id= req.params.id;
+	sellerModel.getByProductId(id, function(results){
+		
+		var title = results[0].title;
+		var price = results[0].price;
+		var description = results[0].description;
+		var sellerid = results[0].sellerid;
+
+		if(req.cookies['role']== 'customer'){
+			res.render('landingpage/buypage', {title: title, sellerid:sellerid, customerid:req.cookies['uname'], price: price, role:req.cookies['role'],  description: description});
+
+		}else{
+			res.render('landingpage/buypage', {title: title, price: price, role:req.cookies['role'],  description: description});
+
+		}
+			
+	});
+});
 
 
+router.post('/buy/:id', function(req, res){
+
+	let productid = req.params.id;
+
+});
 
 
 router.get('/additem', function(req, res){

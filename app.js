@@ -41,8 +41,7 @@ app.get('/', (req, res)=>{
 	sellerModel.getAll(function(results){
 
         if(results.length >0){
-          
-		res.render('landingpage/index', {items: results});
+		res.render('landingpage/index', {items: results, role:req.cookies['role'] });
 		
 
         }

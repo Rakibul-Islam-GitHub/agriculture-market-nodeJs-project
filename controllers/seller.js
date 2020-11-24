@@ -49,21 +49,27 @@ router.get('/dashboard', function(req, res){
 	console.log(req.session.userid);
 	
 	sellerModel.getById(id, function(results){
+		
 
         if(results.length >0){
 			let p = results.length;
 
 			sellerModel.getorderlist(function(result){
+				sellerModel.getcommentBysellerId(req.cookies['uname'], function(comments){
+					console.log(comments);
+			
+					let c = comments.length;
+					
+					res.render('seller/dashboard', {productcount : p, commentcount: c, items: result });
+						
+					});
 
 				
 
-			res.render('seller/dashboard', {productcount : p, items: result });
+			
 				
 			});
           
-			
-		
-
         }
 		
 	});
@@ -133,16 +139,25 @@ router.post('/additem', upload.single('pic'), [
 
 router.get('/manageitem', function(req, res){
 
-	sellerModel.getAll(function(results){
+	let id= req.cookies['uname'];
+
+	console.log(req.session.userid);
+	
+	sellerModel.getById(id, function(results){
 
         if(results.length >0){
+			let p = results.length;
+
+			res.render('seller/manageitem', {items: results});
           
-		res.render('seller/manageitem', {items: results});
+			
 		
 
         }
 		
 	});
+
+	
 
 	
 	
