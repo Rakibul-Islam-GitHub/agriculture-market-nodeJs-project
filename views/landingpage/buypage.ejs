@@ -399,7 +399,7 @@ p.detailseditdlt {
                               
                    <% if(role=='customer') {  %>
                     <div class="d-block mt-3 mb-5">
-                        <input class="text-center myButton mr-1" type="submit" title="<%=sellerid%>" name="submit" value="Confirm">
+                        <input class="text-center myButton mr-1" id="buyconf" type="submit" pname="<%=title%>" price="<%=price%>" title="<%=sellerid%>" name="<%=pid%>" value="Confirm">
                     <a class="myButton text-center" href="/">Cancel</a>
     
                      </div>
@@ -448,6 +448,42 @@ p.detailseditdlt {
 
 
 $(document).ready(function() {
+
+    $('#buyconf').click(function(e){
+        e.preventDefault();
+        var sellerid= $(this).prop("title");
+        let pid = $(this).prop("name");
+        var price =$('#buyconf').attr('price');
+        var pname =$('#buyconf').attr('pname');
+        alert(pname);
+        $.ajax({
+
+url: '/product/buy/'+pid+'',
+type: "POST",
+data: {
+'sellerid' : sellerid,
+'productid': pid,
+'price' : price,
+'pname' : pname
+
+},
+success: function(response) {
+
+   
+   window.location.href= '/';
+
+
+
+},
+error: function (request, status, error) {
+//alert('error');  //it will show error in webpage if any
+}
+
+});
+       
+
+    });
+    
  
 $('#comment').click(function (e) {
   e.preventDefault();

@@ -28,13 +28,12 @@ module.exports= {
 		});
 
 	}, 
-	getorderlist: function(callback){
-		var sql = "select * from orders";
+	getorderlist: function(id, callback){
+		var sql = 'select * from orders where sellerid= "'+id+'" ';
 		db.getResults(sql, function(results){
 			callback(results);
 		});
 	},
-
 
 	getAll: function(callback){
 		var sql = "select * from items";

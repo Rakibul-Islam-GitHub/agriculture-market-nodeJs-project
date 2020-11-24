@@ -57,6 +57,22 @@ module.exports= {
 		});
 
 	},
+
+	insertOrder : function(item, callback){
+
+		let sql= 'insert into orders (pname,customerid, productid, price, sellerid, date, time) values ("'+item.pname+'", "'+item.customerid+'","'+item.productid+'", "'+item.price+'", "'+item.sellerid+'","'+item.date+'", "'+item.time+'")';
+		db.execute(sql, function(status){
+
+			if(status){
+				callback(true);
+
+			}else{
+				callback(false);
+			}
+
+		});
+
+	},
 	
 	
 	delete: function(id, callback){

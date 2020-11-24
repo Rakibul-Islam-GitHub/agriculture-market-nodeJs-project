@@ -6,11 +6,13 @@ const router 		= express.Router();
 
 
 router.get('/', (req, res)=>{
-	if(req.cookies['uname']==''){
+	if(req.cookies['uname']==undefined){
 		res.render('login/index', {loginalerts: undefined});
 
 	}else if(req.cookies['role']=='seller'){
 		res.redirect('seller/dashboard');
+	}else{
+		res.redirect('/');
 	}
 	
 });
@@ -46,7 +48,7 @@ router.post('/',  [
 
 
 		if(status){
-            loginModel.getAll(function(results){
+            loginModel.getRole(user, function(results){
 
 				
 				if(results[0].role=='admin'){

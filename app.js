@@ -37,6 +37,7 @@ app.use('/product', product);
 
 //router
 app.get('/', (req, res)=>{
+	console.log(req.cookies['uname']);
 
 	sellerModel.getAll(function(results){
 
@@ -70,6 +71,7 @@ app.post('/search', (req, res)=>{
 })
 app.get('/logout2', (req, res)=>{
 	res.clearCookie('uname');
+	res.clearCookie('role');
 	req.session.userid= '';
 	console.log('get ajax call from dashboard');
 	//res.redirect('/login');

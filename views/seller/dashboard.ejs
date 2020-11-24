@@ -83,10 +83,10 @@ a{
           <span class="nav-link-text">Comments</span>
         </a>
       </li>
-      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Message">
-        <a class="nav-link" href="/seller/message">
-          <i class="fa fa-fw fa-envelope-open"></i>
-          <span class="nav-link-text">Message</span>
+      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Order">
+        <a class="nav-link" href="/seller/order">
+          <i class="fa fa-fw fa-shopping-cart"></i>
+          <span class="nav-link-text">Order</span>
         </a>
       </li>
     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
@@ -96,10 +96,10 @@ a{
       </a>
       <ul class="sidenav-second-level collapse" id="collapseComponents">
         <li>
-          <a href="seller/comments">Comments</a>
+          <a href="/seller/comments">Comments</a>
         </li>
         <li>
-          <a href="seller/message">Message</a>
+          <a href="/seller/message">Message</a>
         </li>
       </ul>
     </li>
@@ -117,40 +117,7 @@ a{
               <ul class="topnav navbar-nav ml-auto">
 
                 <!-- message alert dropdown start -->
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-fw fa-envelope"></i>
-                    <span class="d-lg-none">Messages
-                      <span class="badge badge-pill badge-primary">12 New</span>
-                    </span>
-                    <span class="indicator text-primary d-none d-lg-block">
-                      <i class="fa fa-fw fa-circle"></i>
-                    </span>
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="messagesDropdown">
-                    <h6 class="dropdown-header">New Messages:</h6>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">
-                      <strong>David Miller</strong>
-                      <span class="small float-right text-muted">11:21 AM</span>
-                      <div class="dropdown-message small">Hey there! This new version of SB Admin is pretty awesome! These messages clip off when they reach the end of the box so they don't overflow over to the sides!</div>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">
-                      <strong>Jane Smith</strong>
-                      <span class="small float-right text-muted">11:21 AM</span>
-                      <div class="dropdown-message small">I was wondering if you could meet for an appointment at 3:00 instead of 4:00. Thanks!</div>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">
-                      <strong>John Doe</strong>
-                      <span class="small float-right text-muted">11:21 AM</span>
-                      <div class="dropdown-message small">I've sent the final files over to you for review. When you're able to sign off of them let me know and we can discuss distribution.</div>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item small" href="#">View all messages</a>
-                  </div>
-                </li>
+               
                 <!-- message alert dropdown end-->
         
         
@@ -224,7 +191,7 @@ a{
               </div>
               <div class="mr-5"> [] Orders!</div>
             </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
+            <a class="card-footer text-white clearfix small z-1" href="/seller/order">
               <span class="float-left">View Details</span>
               <span class="float-right">
                 <i class="fa fa-angle-right"></i>
@@ -268,12 +235,12 @@ a{
               <% 
               items.forEach( function(item){ %>
               <tr>
-                  <td><%= item.id %></td>
+                  <td><%= item.orderid %></td>
                   <td><%= item.pname %></td>
                   <td><%= item.date %></td>
                   <td>
                
-                    <a class="editdltbtn2"  id="dltitembtn" value="<%= item.id %>" >View</a>
+                    <a class="editdltbtn2"  id="dltitembtn" value="<%= item.orderid %>" >View</a>
                     
                   </td>
               </tr>
@@ -412,7 +379,7 @@ error: function (request, status, error) {
 
       $.ajax({
       method: "GET", 
-      url: "/logout2", 
+      url: "/logout", 
      
     })
     .done(function( res ) {

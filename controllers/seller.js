@@ -22,8 +22,9 @@ router.get('*',  (req, res, next)=>{
 
 router.post('/report', function(req,res){
 	console.log(req.body.orderid);
+	let id= req.cookies['uname'];
 
-	sellerModel.getorderlist(function(results){
+	sellerModel.getorderlist(id, function(results){
      console.log(JSON.stringify(results));
 		res.send(results);
 			
@@ -54,7 +55,7 @@ router.get('/dashboard', function(req, res){
         if(results.length >0){
 			let p = results.length;
 
-			sellerModel.getorderlist(function(result){
+			sellerModel.getorderlist(id, function(result){
 				sellerModel.getcommentBysellerId(req.cookies['uname'], function(comments){
 					console.log(comments);
 			
@@ -64,9 +65,6 @@ router.get('/dashboard', function(req, res){
 						
 					});
 
-				
-
-			
 				
 			});
           
@@ -124,14 +122,6 @@ router.post('/additem', upload.single('pic'), [
 			}
 	
 		});
-
-
-
-		
-		
-
-		
-		
 
 	}
 
@@ -268,9 +258,15 @@ router.get('/comments', function(req, res){
 
 });
 
-router.get('/message', function(req, res){
+router.get('/order', function(req, res){
+	let id= req.cookies['uname'];
+
+	sellerModel.getorderlist(id, function(results){
+		res.render('seller/order', {items: results} );
+		
+	});
 	
-	res.render('seller/message');
+	
 
 });
 
@@ -303,7 +299,7 @@ router.post('/profile', [
 
     if (!errors.isEmpty()) {
 		profilealerts = errors.array();
-		sellerModel.getprofile(req.session.userid, function(results){
+		sellerModel.getprofile(req.cookies['uname'], function(results){
 		
 			var name = results[0].name;
 			var address = results[0].address;
@@ -320,7 +316,7 @@ router.post('/profile', [
     } else{
 		let id= req.session.userid;
 	let details={
-		id: req.session.userid,
+		id: req.cookies['uname'],
         name : req.body.name,
         address : req.body.address,
 		phone: req.body.phone,
@@ -358,7 +354,7 @@ router.get('/profile/edit', function(req, res){
 });
 
 router.post('/profile/edit',  upload.single('pic'), function(req, res){
-	let id= req.session.userid;
+	let id= req.cookies['uname'];
 	let details={
 		id: id,
 		image: req.file.filename

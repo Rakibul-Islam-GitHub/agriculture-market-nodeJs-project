@@ -123,7 +123,7 @@ router.get('/buy/:id', function(req, res){
 		var sellerid = results[0].sellerid;
 
 		if(req.cookies['role']== 'customer'){
-			res.render('landingpage/buypage', {title: title, sellerid:sellerid, customerid:req.cookies['uname'], price: price, role:req.cookies['role'],  description: description});
+			res.render('landingpage/buypage', {title: title, sellerid:sellerid, pid:id, customerid:req.cookies['uname'], price: price, role:req.cookies['role'],  description: description});
 
 		}else{
 			res.render('landingpage/buypage', {title: title, price: price, role:req.cookies['role'],  description: description});
@@ -136,7 +136,42 @@ router.get('/buy/:id', function(req, res){
 
 router.post('/buy/:id', function(req, res){
 
+	let id = req.params.id;
+	const date = new Date();
+	var seconds = date.getSeconds();
+var minutes = date.getMinutes();
+var hour = date.getHours();
+
+var ampm = hour >= 12 ? 'PM' : 'AM';
+hour = hour % 12;
+hour = hour ? hour : 12; // the hour '0' should be '12'
+minutes = minutes < 10 ? '0'+minutes : minutes;
+let time= hour +':'+minutes+':'+seconds +' '+ampm;
+
+const mysqlDate = date.toISOString().split("T")[0];
+
+
+	let orderdetails={
+		productid : req.params.id,
+		sellerid  : req.body.sellerid,
+		customerid : req.cookies['uname'],
+		price : req.body.price,
+		pname : req.body.pname,
+		date : mysqlDate,
+		time : time
+	}
+
+	productModel.insertOrder(orderdetails, function(status){
+		if(status){
+			res.json('success');
+		}else{
+			res.json('error');
+
+		}
+	})
+
 	let productid = req.params.id;
+	let sellerid= req.body.sellerid;
 
 });
 
@@ -280,58 +315,6 @@ router.get('/manageitem/edit/:id', function(req, res){
  });
 
 
-router.post('/profile', [
-    check('name').not().isEmpty().withMessage('Name can not be empty'),
-	check('address', 'Please fill the address').not().isEmpty(),
-	check('phone', 'Enter a product description').isNumeric().isLength({min:11, max:11}).withMessage('Phone number should have 11 digits'),
-	check('email', 'Invalid email address').isEmail(),
-    
-  ], function(req, res){
-	const errors = validationResult(req);
-	console.log(errors);
-	
-
-    if (!errors.isEmpty()) {
-		profilealerts = errors.array();
-		sellerModel.getprofile(req.session.userid, function(results){
-		
-			var name = results[0].name;
-			var address = results[0].address;
-			var phone = results[0].phone;
-			var image = results[0].image;
-			var email = results[0].email;
-			
-			res.render('seller/profile', {profilealerts, name: name, address: address,  phone: phone, image: image, email: email});
-			//res.render('seller/profile', {alerts});
-			
-		});
-		
-      
-    } else{
-		let id= req.session.userid;
-	let details={
-		id: req.session.userid,
-        name : req.body.name,
-        address : req.body.address,
-		phone: req.body.phone,
-		email: req.body.email
-    };
-    
-
-        sellerModel.profileUpdate(details, function(status){
-        if(status){
-            console.log('profile details updated');
-			res.redirect('/seller/profile');
-        }else{
-
-        }
-
-    });
-	
-
-	}
-	
-});
 
 
 

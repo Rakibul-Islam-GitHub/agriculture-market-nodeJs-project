@@ -121,6 +121,14 @@ div#output {
     font-weight: 500;
     font-size: larger;
 }
+header nav ul li {
+    display: inline-block;
+    width: 16%;
+    text-align: center;
+}
+#logout{
+    cursor: pointer;
+}
 
     </style>
   </head>
@@ -145,6 +153,7 @@ div#output {
 
              <%  } else if(role=='customer'){  %>
                 <li><a href="/customer/dashboard">My Account</a></li>
+                <li><a id="logout">Logout</a></li>
 
             <% }else{  %>
                 <li><a href="/login">Login</a></li>
@@ -341,8 +350,21 @@ function myFunction(item) {
       });
 
 
+      $('#logout').click(function(){
+      
 
+      $.ajax({
+      method: "GET", 
+      url: "/logout", 
+     
+    })
+    .done(function( res ) {
+        window.location.href= '/login';
+    });
 
+    
+
+  });
 
 
 

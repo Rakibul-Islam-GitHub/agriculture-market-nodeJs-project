@@ -19,6 +19,14 @@ module.exports= {
 		});
 
 	},
+	getRole: function(user, callback){
+		var sql = 'select role from logins where username = "'+user.username+'" ';
+		db.getResults(sql, function(results){
+			callback(results);
+		});
+
+	},
+
 	getAll: function(callback){
 		var sql = "select * from logins";
 		db.getResults(sql, function(results){

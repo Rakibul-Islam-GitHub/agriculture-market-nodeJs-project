@@ -65,10 +65,10 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
-              <a href="seller/comments">Comments</a>
+              <a href="/seller/comments">Comments</a>
             </li>
             <li>
-              <a href="seller/message">Message</a>
+              <a href="/seller/order">Order</a>
             </li>
           </ul>
         </li>
@@ -116,7 +116,7 @@
         <li class="breadcrumb-item">
           <a href="#">Dashboard</a>
         </li>
-        <li class="breadcrumb-item active">Add new Items</li>
+        <li class="breadcrumb-item active">Order List</li>
       </ol>
       <!-- Icon Cards-->
 
@@ -130,7 +130,7 @@
          
           <div class="input-group mb-0">
             <div class="form-group">
-              <input type="text" id="myInput" class="form-control"  placeholder="Search product by ID..">
+              <input type="text" id="myInput" class="form-control"  placeholder="Search order by ID..">
             </div>
             
           </div>
@@ -138,47 +138,30 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
-                  <th>#ID</th>
-                  <th>Image</th>
-                  <th>Product Name</th>
-                  <th>Price</th>
-                  <th>Description</th>
-                  <th>Action</th>
-                  
-                </tr>
-              </thead>
-              
-              <tbody>
-               
-                <!-- <tr>
-                  <td>Product 1</td>
-                  <td>500 tk</td>
-                  <td>This is test description</td>
-                  <td>
-                    <a class="editdltbtn" href="/seller/manageitem/edit/">Edit</a> |
-                    <a class="editdltbtn"  data-toggle="modal" data-target="#dltitembtnmodal" id="dltitembtn" title="id here" >Delete</a>
-                    
-                </td>
-                  
-                </tr> -->
-
+                    <th>Order ID</th>
+                    <th>Product Name</th>
+                    <th>CustomerID</th>
+                    <th>Date</th>
+                   
+                  </tr>
+                </thead>
                 <% 
                 items.forEach( function(item){ %>
                 <tr>
-                    <td><%= item.id %></td>
-                    <td><img src="/image/<%= item.image %>" width="60" height="50" alt="pic"></td>
-                   
-                    <td><%= item.title %></td>
-                    <td><%= item.price %></td>
-                    <td><%= item.description %></td>
-                   
-                    <td>
-                      <a class="editdltbtn" href="/seller/manageitem/edit/<%= item.id %>">Edit</a> |
-                      <a class="editdltbtn2" href="/seller/manageitem/delete/<%= item.id %>" id="dltitembtn" value="<%= item.id %>" >Delete</a>
+                    <td><%= item.orderid %></td>
+                    <td><%= item.pname %></td>
+                    <td><%= item.customerid %></td>
+                    <td><%= item.date %></td>
+
+                    <!-- <td>
+                 
+                      <a class="editdltbtn2"  id="dltitembtn" value="<%= item.orderid %>" >View</a>
                       
-                    </td>
+                    </td> -->
                 </tr>
-    
+  
+                
+        
             <%
                 }); 
             %>
@@ -234,25 +217,7 @@
 
     <!-- logout modal end -->
 
-    <!-- delete item modal start -->
-    <div class="modal fade" id="dltitembtnmodal" tabindex="-1" role="dialog" aria-labelledby="dltitembtnlbl" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="dltitembtnlbl">Ready to Delete?</h5>
-              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div class="modal-body">Are you sure to delete this item?</div>
-            <div class="modal-footer">
-              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-              <a class="btn btn-primary" id="dltitembtnconfirm" >Confirm</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- delete item modal end -->
+   
 
 
   </div>
@@ -299,48 +264,7 @@ $(document).ready(function() {
 }
 
 
-  // $('.editdltbtn2').click(function() {
-  //   var dltid = $(this).attr("value");
-  //   // alert(dltid);
-  //   deletebyId(dltid);
-    
-  // });
-  
 
-//  function deletebyId(id) {
-
-//   $('#dltitembtnconfirm').click(function(e){      // delete item confirm btn
-//         e.preventDefault();
-//        // alert(id);
-
-//         $.ajax({
-
-//      url: "/seller/manageitem/delete",
-//      type: "POST",
-//      data: {
-
-//        'itemid': id
-
-//      },
-//      success: function(response) {
-//        window.location.href= '/seller/manageitem/delete/confirm';
-
-        
-
-//      },
-//      error: function (request, status, error) {
-//      alert('error');  //it will show error in webpage if any
-//      }
-
-//      });
-//     });
-   
-//  };
- 
-
-  
-
-  
 
   $('#logoutbtn').click(function(){
       
